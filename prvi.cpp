@@ -1,46 +1,58 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+void input_vector(std::vector<int>& v)
+{
+    int broj=1;
+    while(broj!=0)
+    {
+        cin>>broj;
+        v.push_back(broj);
+    }
+    v.pop_back();
 
-inline bool ascending(int a, int b) {
-    return a < b;
+
 }
 
-inline bool descending(int a, int b) {
-    return a > b;
-}
 
-void my_sort(int arr[], int n, bool (*cmp)(int, int)) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - 1 - i; j++) {
-            if (!cmp(arr[j], arr[j + 1])) {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
+void print_vector(const std::vector<int>& v)
+ {
+    for(const auto& x:v)
+    {
+        cout<<x<<" ";
+        cout<<endl;
+    }
+
+    for (auto it = v.begin(); it != v.end(); ++it)
+        std::cout << *it << " ";
+
+ }
+
+
+
+ void shrink_to_fit()
+ {
+
+ }
+
+ int main()
+ {
+    vector<int>v;
+    input_vector(v);
+    print_vector(v);
+    std::vector<int> c;
+    for (int i = 0; i < 20; ++i)
+        {
+            c.push_back(i);
+            std::cout << c.size() << "/"
+            << c.capacity() << " ";
         }
-    }
-}
+    c.reserve(100);
+    c.shrink_to_fit();
+    std::cout << c.capacity();
 
-int main() {
-    int arr[] = {5, 2, 8, 1, 4};
-    int n = 5;
 
-    my_sort(arr, n, ascending);
 
-    std::cout << "Uzlazno: ";
-    for (int i = 0; i < n; i++) {
-        std::cout << arr[i] << ' ';
-    }
-
-    std::cout << '\n';
-
-    my_sort(arr, n, descending);
-
-    std::cout << "Silazno: ";
-    for (int i = 0; i < n; i++) {
-        std::cout << arr[i] << ' ';
-    }
-
-    std::cout << '\n';
-
-    return 0;
-}
+     return 0;
+ }
