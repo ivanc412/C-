@@ -1,42 +1,57 @@
-
 #include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+void input_vector(vector<int> &v)
+{
+    int broj;
+    do
+    {
+        cin>>broj;
+        if(broj!=0)
+        {
+            v.push_back(broj);
 
-namespace geo {
-    const double PI = 3.14159;
+        }
+    } while(broj!=0);
 }
+int main()
+{
+    vector <int> v;
 
-double area(double r) {
-    return geo::PI * r * r;
-}
+    cout << "Unesite brojeve (0 za kraj): ";
+    input_vector(v);
 
-double area(double a, double b) {
-    return a * b;
-}
+    int k;
 
-int area(int a) {
-    return a * a;
-}
+    cout << "k: ";
+    cin >> k;
 
-void print_line(char c = '-', int length = 30) {
-    for (int i = 0; i < length; i++) {
-        std::cout << c;
+    int negativnih=count_if(v.begin(),v.end(),[](int x){return x<0;});
+    cout << "negativnih:" << negativnih << endl;
+    auto it=find_if(v.begin(),v.end(),[k](int x){return x%k==0;});
+    if (it != v.end())
+    {
+        cout << "prvi visekratnik od " << k << ": " << *it << " (pozicija " << it - v.begin() << ")" << endl;
+
     }
-    std::cout << "\n";
+    else
+    {
+        cout << "Nema visekratnika broja " << k << endl;
+    }
+    if (!v.empty())
+    {
+        auto min_it = min_element(v.begin(), v.end());
+        auto max_it = max_element(v.begin(), v.end());
+        cout << "min " << *min_it << " (pozicija " << min_it - v.begin() << "), ";
+        cout << "max " << *max_it << " (pozicija " << max_it - v.begin() << ")" << endl;
+
+    }
+    v.erase(remove_if(v.begin(),v.end(),[k](int x){return x%k==0;}),v.end());
+    for(int x:v)
+    {
+        cout << "bez visekratnika" << x << endl;
+    }
+
+
 }
-
-int main() {
-    std::cout << "area(5) = " << area(5) << "\n";
-    print_line();
-
-    std::cout << "area(5.0) = " << area(5.0) << "\n";
-    print_line('*', 20);
-
-    std::cout << "area(2, 3) = " << area(2, 3) << "\n";
-    print_line();
-
-    std::cout << "area('A') = " << area('A') << "\n";
-    print_line();
-
-    return 0;
-}
-
